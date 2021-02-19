@@ -25,6 +25,6 @@ jobs:
       # https://docs.aws.amazon.com/cli/latest/userguide/cli-services-s3-commands.html
       - name: Deploy files to s3
         run: |
-          aws s3 cp   index.html s3://beta.languageforge.org
-          aws s3 sync assets     s3://beta.languageforge.org/assets --delete
-          aws s3 sync images     s3://beta.languageforge.org/images --delete
+          aws s3 cp   src/index.html s3://beta.languageforge.org
+          aws s3 sync src/assets     s3://beta.languageforge.org/assets --delete
+          aws s3 sync src/images     s3://beta.languageforge.org/images --delete
