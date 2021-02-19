@@ -7,3 +7,5 @@
 1. refresh browser
 1. simply `ctrl-c` to kill it.
 
+## deployment
+Handled by Github Actions, see `.github/workflows/deploy.yml` for details.
