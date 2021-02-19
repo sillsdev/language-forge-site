@@ -1,0 +1,30 @@
+name: s3 deployment
+
+on:
+  push:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with: 
+          aws-access-key-id: ${{ secrets.S3_UPLOADER_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.S3_UPLOADER_AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      # https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html
+      # https://docs.aws.amazon.com/cli/latest/userguide/cli-services-s3-commands.html
+      - name: Deploy files to s3
+        run: |
+          aws s3 cp   src/index.html s3://beta.languageforge.org
+          aws s3 sync src/assets     s3://beta.languageforge.org/assets --delete
+          aws s3 sync src/images     s3://beta.languageforge.org/images --delete
